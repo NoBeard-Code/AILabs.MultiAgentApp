@@ -1,0 +1,18 @@
+﻿{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Start": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7002;http://localhost:5120",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MicrosoftAppId": "1f68832a-05c0-4725-9f77-a7d590758a3a",
+        "MicrosoftAppPassword": "qCo8Q~kqV_BRgvTf8M.xNcwBj4GcUY0MtcJ5DdeD",
+        "MicrosoftAppTenantId": "",
+        "BOT_ID": "hrgeneralist",
+        "BACKEND_URL": "https://localhost:7066"
+      }
+    }
+  }
+}

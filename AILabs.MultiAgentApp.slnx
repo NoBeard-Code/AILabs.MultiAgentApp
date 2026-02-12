@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="AILabs.MultiAgentApp.AgentHost/AILabs.MultiAgentApp.AgentHost.csproj" />
+  <Project Path="AILabs.MultiAgentApp.Core/AILabs.MultiAgentApp.Core.csproj" />
+  <Project Path="AILabs.MultiAgentApp.CoreApi/AILabs.MultiAgentApp.CoreApi.csproj" />
+  <Project Path="AILabs.MultiAgentApp.HRGeneralist/AILabs.MultiAgentApp.HRGeneralist.csproj" />
+</Solution>
