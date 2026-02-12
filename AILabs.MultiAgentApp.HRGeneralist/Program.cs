@@ -1,29 +1,33 @@
-using AILabs.MultiAgentApp.HRGeneralist;
-using Microsoft.Bot.Builder;
-using Microsoft.Bot.Builder.Integration.AspNet.Core;
-using Microsoft.Bot.Connector.Authentication;
+using AILabs.MultiAgentApp.Core;
+using Microsoft.Agents.Builder;
+using Microsoft.Agents.Hosting.AspNetCore;
+using Microsoft.Agents.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient();
 builder.Services.AddControllers();
 
-// Bot Framework auth (Azure Bot Service)
-builder.Services.AddSingleton<BotFrameworkAuthentication>(sp =>
-{
-    var config = sp.GetRequiredService<IConfiguration>();
-    return new ConfigurationBotFrameworkAuthentication(config);
-});
+// Add AgentApplicationOptions from appsettings section "AgentApplication".
+builder.AddAgentApplicationOptions();
 
-// Adapter
-builder.Services.AddSingleton<IBotFrameworkHttpAdapter>(sp =>
-{
-    var auth = sp.GetRequiredService<BotFrameworkAuthentication>();
-    var logger = sp.GetRequiredService<ILogger<CloudAdapter>>();
-    return new CloudAdapter(auth, logger);
-});
+// Domain services
+builder.Services.AddSingleton<IAgentRouter, AgentRouter>();
+builder.Services.AddSingleton<IProcessRepository, ProcessRepository>();
+builder.Services.AddSingleton<IProcessExecutor, ProcessExecutor>();
 
-builder.Services.AddTransient<IBot, GenericAgentBot>();
+// Add the AgentApplication, which contains the logic for responding to user messages.
+builder.AddAgent<MyAgent>();
+
+// Add AspNet token validation for Azure Bot Service and Entra.  Authentication is
+// configured in the appsettings.json "TokenValidation" section.
+builder.Services.AddAgentAspNetAuthentication(builder.Configuration);
+
+// Register IStorage.  For development, MemoryStorage is suitable.
+// For production Agents, persisted storage should be used so
+// that state survives Agent restarts, and operates correctly
+// in a cluster of Agent instances.
+builder.Services.AddSingleton<IStorage, MemoryStorage>();
 
 builder.Services.AddHttpClient("CoreBackend", client => 
 { 
@@ -34,11 +38,18 @@ var app = builder.Build();
 
 var routePrefix = builder.Configuration["BOT_ID"];
 
+
+// Enable AspNet authentication and authorization
+app.UseAuthentication();
+app.UseAuthorization();
+
 // This receives incoming messages from Azure Bot Service or other SDK Agents
-var incomingRoute = app.MapPost($"/{routePrefix}/api/messages", (HttpRequest req, HttpResponse res, IBotFrameworkHttpAdapter adapter, IBot bot) =>
-{
-    adapter.ProcessAsync(req, res, bot);
-});    
+var incomingRoute = app.MapPost($"/{routePrefix}/api/messages",
+    async (HttpRequest request, HttpResponse response, IAgentHttpAdapter adapter, IAgent agent, CancellationToken cancellationToken) =>
+    {
+        await adapter.ProcessAsync(request, response, agent, cancellationToken);
+    });
+
 
 if (!app.Environment.IsDevelopment())
 {
