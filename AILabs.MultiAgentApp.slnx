@@ -1,4 +1,9 @@
 <Solution>
+  <Folder Name="/Aspire/">
+    <Project Path="AILabs.MultiAgentApp.Gateway/AILabs.MultiAgentApp.Gateway.csproj" />
+    <Project Path="Aspire/AILabs.MultiAgentApp.AppHost/AILabs.MultiAgentApp.AppHost.csproj" Id="f2174370-9bc0-4bae-a556-2c562125ac20" />
+    <Project Path="Aspire/AILabs.MultiAgentApp.ServiceDefaults/AILabs.MultiAgentApp.ServiceDefaults.csproj" />
+  </Folder>
   <Project Path="AILabs.MultiAgentApp.AgentHost/AILabs.MultiAgentApp.AgentHost.csproj" />
   <Project Path="AILabs.MultiAgentApp.Core/AILabs.MultiAgentApp.Core.csproj" />
   <Project Path="AILabs.MultiAgentApp.CoreApi/AILabs.MultiAgentApp.CoreApi.csproj" />

@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\AILabs.MultiAgentApp.Core\AILabs.MultiAgentApp.Core.csproj" />
+	  <ProjectReference Include="..\Aspire\AILabs.MultiAgentApp.ServiceDefaults\AILabs.MultiAgentApp.ServiceDefaults.csproj" />
 	</ItemGroup>
 	
 </Project>

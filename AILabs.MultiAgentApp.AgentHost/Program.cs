@@ -5,6 +5,8 @@ using Microsoft.Agents.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 builder.Services.AddHttpClient();
 builder.Services.AddControllers();
 
@@ -35,13 +37,14 @@ var app = builder.Build();
 app.UseAuthentication();
 app.UseAuthorization();
 
+var routePrefix = builder.Configuration["BOT_ID"];
+
 // This receives incoming messages from Azure Bot Service or other SDK Agents
-var incomingRoute = app.MapPost("hrgeneralist/api/messages",
+var incomingRoute = app.MapPost($"/{routePrefix}/api/messages",
     async (HttpRequest request, HttpResponse response, IAgentHttpAdapter adapter, IAgent agent, CancellationToken cancellationToken) =>
     {
         await adapter.ProcessAsync(request, response, agent, cancellationToken);
     });
-
 
 if (!app.Environment.IsDevelopment())
 {
@@ -51,7 +54,9 @@ else
 {
     // Hardcoded for brevity and ease of testing. 
     // In production, this should be set in configuration.
-    app.Urls.Add($"http://localhost:3999");
+    //app.Urls.Add($"http://localhost:3999");
 }
+
+app.MapDefaultEndpoints();
 
 app.Run();

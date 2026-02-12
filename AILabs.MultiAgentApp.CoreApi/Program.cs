@@ -4,6 +4,8 @@ using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 // Use Newtonsoft.Json for Activity deserialization
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options => 
@@ -15,6 +17,8 @@ builder.Services.AddControllers()
 builder.Services.AddSingleton<IAgentOrchestrator, AgentOrchestrator>();
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 app.MapControllers();
 

@@ -1,0 +1,17 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.0.1">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>a52929c2-a97d-449e-9b25-38647d686721</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AILabs.MultiAgentApp.AgentHost\AILabs.MultiAgentApp.AgentHost.csproj" />
+    <ProjectReference Include="..\..\AILabs.MultiAgentApp.CoreApi\AILabs.MultiAgentApp.CoreApi.csproj" />
+    <ProjectReference Include="..\..\AILabs.MultiAgentApp.Gateway\AILabs.MultiAgentApp.Gateway.csproj" />
+  </ItemGroup>
+
+</Project>
