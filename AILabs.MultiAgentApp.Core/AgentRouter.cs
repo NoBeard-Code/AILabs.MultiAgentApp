@@ -1,4 +1,5 @@
 ﻿using Microsoft.Agents.Builder;
+using Microsoft.Agents.Core.Models;
 
 namespace AILabs.MultiAgentApp.Core;
 
@@ -20,8 +21,8 @@ public class AgentRouter(IProcessRepository repo) : IAgentRouter
         // Normalize AppId
         var agentAppId = agentId.StartsWith("28:") ? agentId.Substring(3) : agentId;
 
-        await turnContext.SendActivityAsync($"DEBUG: TenantId: {tenantId}", cancellationToken: cancellationToken);
-        await turnContext.SendActivityAsync($"DEBUG: AgentAppId: {agentAppId}", cancellationToken: cancellationToken);
+        //await turnContext.SendActivityAsync($"DEBUG: TenantId: {tenantId}", cancellationToken: cancellationToken);
+        //await turnContext.SendActivityAsync($"DEBUG: AgentAppId: {agentAppId}", cancellationToken: cancellationToken);
 
         return await repo.GetProcessForTenantAgentAsync(tenantId, agentId, cancellationToken);
     }

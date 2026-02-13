@@ -1,21 +1,18 @@
-﻿using Microsoft.Bot.Schema;
-
-namespace AILabs.MultiAgentApp.CoreApi;
+﻿namespace AILabs.MultiAgentApp.CoreApi;
 
 public interface IAgentOrchestrator
 {
-    Task<Activity> ProcessAsync(string agentId, Activity incoming);
+    Task<string> ProcessAsync(string agentId, string message);
 }
 
 public class AgentOrchestrator : IAgentOrchestrator
 {
-    public async Task<Activity> ProcessAsync(string agentId, Activity incoming)
+    public async Task<string> ProcessAsync(string agentId, string message)
     {
         // TODO: Replace with Microsoft.Agents orchestration logic
 
-        var reply = incoming.CreateReply();
-        reply.Text = $"[{agentId}] You said: {incoming.Text}";
+        var result = $"[{agentId}] You said: {message}";
 
-        return await Task.FromResult(reply);
+        return result;
     }
 }

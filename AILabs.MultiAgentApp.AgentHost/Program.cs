@@ -31,6 +31,11 @@ builder.Services.AddAgentAspNetAuthentication(builder.Configuration);
 // in a cluster of Agent instances.
 builder.Services.AddSingleton<IStorage, MemoryStorage>();
 
+builder.Services.AddHttpClient("CoreBackend", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["BACKEND_URL"]);
+});
+
 var app = builder.Build();
 
 var routePrefix = builder.Configuration["BOT_ID"];

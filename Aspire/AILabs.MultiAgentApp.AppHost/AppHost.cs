@@ -1,6 +1,7 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var coreApi = builder.AddProject<Projects.AILabs_MultiAgentApp_CoreApi>("coreapi");
+var coreApi = builder.AddProject<Projects.AILabs_MultiAgentApp_CoreApi>("coreapi")
+    .WithEndpoint("https", e => e.Port = 7066);
 
 var hrGeneralistAgent = builder.AddProject<Projects.AILabs_MultiAgentApp_AgentHost>("agent-hrgeneralist")
     .WithEnvironment("Connections__ServiceConnection__Settings__ClientId", "1f68832a-05c0-4725-9f77-a7d590758a3a")

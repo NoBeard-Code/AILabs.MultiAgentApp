@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Bot.Schema;
 
 namespace AILabs.MultiAgentApp.CoreApi.Controllers;
 
@@ -15,8 +14,8 @@ public class AgentController : ControllerBase
     }
 
     [HttpPost] 
-    public async Task<Activity> PostAsync(string agentId, [FromBody] Activity incoming)
+    public async Task<string> PostAsync(string agentId, [FromBody] string message)
     {
-        return await _orchestrator.ProcessAsync(agentId, incoming); 
+        return await _orchestrator.ProcessAsync(agentId, message); 
     }
 }
