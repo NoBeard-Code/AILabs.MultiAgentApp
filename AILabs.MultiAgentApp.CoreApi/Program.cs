@@ -16,6 +16,14 @@ builder.Services.AddControllers()
 
 builder.Services.AddSingleton<IAgentOrchestrator, AgentOrchestrator>();
 
+builder.Services.AddHttpClient("gateway-mgmt", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:3999");
+    // configure auth/cert if needed
+});
+
+builder.Services.AddHostedService<AgentSupervisorService>();
+
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
