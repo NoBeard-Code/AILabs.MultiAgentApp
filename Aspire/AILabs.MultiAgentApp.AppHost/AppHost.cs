@@ -1,5 +1,3 @@
-using Aspire.Hosting;
-
 var builder = DistributedApplication.CreateBuilder(args);
 
 var coreApi = builder.AddProject<Projects.AILabs_MultiAgentApp_CoreApi>("coreapi");
@@ -25,6 +23,8 @@ var accountantAgent = builder.AddProject<Projects.AILabs_MultiAgentApp_AgentHost
 var gateway = builder.AddProject<Projects.AILabs_MultiAgentApp_Gateway>("gateway")
     //.WithEnvironment("HR_PORT", hrGeneralistAgent.GetEndpoint("http"))
     //.WithEnvironment("ACCOUNTANT_PORT", accountantAgent.GetEndpoint("http"))
-    .WithEndpoint("http", e => e.Port = 3999);
+    .WithEndpoint("http", e => e.Port = 3999)
+    .WithReference(hrGeneralistAgent)
+    .WithReference(accountantAgent);
 
 builder.Build().Run();
