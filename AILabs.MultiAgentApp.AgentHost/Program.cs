@@ -33,10 +33,6 @@ builder.Services.AddSingleton<IStorage, MemoryStorage>();
 
 var app = builder.Build();
 
-// Enable AspNet authentication and authorization
-app.UseAuthentication();
-app.UseAuthorization();
-
 var routePrefix = builder.Configuration["BOT_ID"];
 
 // This receives incoming messages from Azure Bot Service or other SDK Agents
@@ -48,6 +44,10 @@ var incomingRoute = app.MapPost($"/{routePrefix}/api/messages",
 
 if (!app.Environment.IsDevelopment())
 {
+    // Enable AspNet authentication and authorization
+    app.UseAuthentication();
+    app.UseAuthorization();
+
     incomingRoute.RequireAuthorization();
 }
 else
